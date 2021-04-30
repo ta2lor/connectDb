@@ -5,6 +5,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       hello: [],
     };
   }
@@ -12,8 +13,8 @@ class App extends Component {
     this._getHello();
   }
   _getHello = async () => {
-    const res = await axios.get("/api/db");
-    this.setState({ hello: res.data.products });
+    const res = await axios.get("/api/db/select");
+    this.setState({ hello: res.data.products, id: res.data.id });
     console.log(this.state.hello);
   };
 
@@ -21,11 +22,10 @@ class App extends Component {
     return (
       <>
         <h3>
-          {" "}
-          {this.state.hello.map((hello1) => (
-            <div>{hello1.temp}</div>
-          ))}{" "}
-          - connected to server from App.js{" "}
+          {this.state.hello.map((table) => (
+            <div key={table.temp}>{table.temp}</div>
+          ))}
+          - connected to server from App.js
         </h3>
       </>
     );

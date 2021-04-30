@@ -8,12 +8,18 @@ app.get("/", (req, res) => {
   res.send("Server Response Success");
 });
 
-app.get("/api/db", (req, res) => {
+app.get("/api/db/select", (req, res) => {
   db.query("select temp from test", (err, data) => {
-    if (!err) res.send({ products: data });
+    if (!err) res.send({ products: data, id: data });
     else res.send(err);
   });
-  db.release();
+});
+
+app.get("/api/db/insert", (req, res) => {
+  db.query("insert into test value(3)", (err, result) => {
+    if (err) res.send(err);
+    else res.send({ success: true });
+  });
 });
 
 app.get("/hello", (req, res) => {
